@@ -32,3 +32,8 @@ Route::post('/booksedit/{books}','BooksController@edit');
 
 // 本を削除
 Route::delete('/book/{book}','BooksController@destroy');
+
+Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'BooksController@index')->name('home');
