@@ -5,34 +5,41 @@
 <div class="panel-body">
     @include('common.errors')
 
-    <form action="{{ url('books') }}" method="POST" class="fomr-horizontal">
+    <form enctype="multipart/form-data" action="{{ url('books') }}" 
+    method="POST" class="form-horizontal">
 
     {{ csrf_field() }}
 
-    <!-- 本のタイトル -->
-    <div class="form-group">
-        <div class="col-sm-6">
-            <label for="book" class="col-sm-3 control-label">Book</label>
-            <input type="text" name="item_name" id="book-name" class="form-control">
-        </div>
-
-        <div class="col-sm-6">
-            <label for="amount" class="col-sm-3 control-label">金額</label>
-            <input type="text" name="item_amount" id="book-amount" class="form-control">
-        </div>
-        
-        <div class="col-sm-6">
-            <label for="number" class="col-sm-3 control-label">数</label>
-            <input type="text" name="item_number" id="book-number" class="form-control">
-        </div>
-        
-          <div class="col-sm-6">
-            <label for="published" class="col-sm-3 control-label">公開日</label>
-            <input type="date" name="published" id="book-published" class="form-control">
-        </div>    
-
-
-    </div>
+            <!-- 本のタイトル -->
+            <div class="form-group">
+                
+                <div class="col-sm-6">
+                    <label for="book" class="col-sm-3 control-label">Book</label>
+                    <input type="text" name="item_name" id="book-name" class="form-control" value="{{ old('item_name') }}">
+                </div>
+                
+                <div class="col-sm-6">
+                    <label for="amount" class="col-sm-3 control-label">金額</label>
+                    <input type="text" name="item_amount" id="book-amount" class="form-control" value="{{ old('item_amount') }}">
+                </div>
+                
+                <div class="col-sm-6">
+                    <label for="number" class="col-sm-3 control-label">数</label>
+                    <input type="text" name="item_number" id="book-number" class="form-control" value="{{ old('item_number') }}">
+                </div>
+                
+                 <div class="col-sm-6">
+                    <label for="published" class="col-sm-3 control-label">公開日</label>
+                    <input type="date" name="published" id="book-published" class="form-control" value="{{ old('published') }}">
+                </div>    
+                
+                <!-- file追加 -->
+                 <div class="col-sm-6">
+                    <label>画像</label>
+                    <input type="file" name="item_img">
+                </div>
+                
+            </div>
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-6"> 
@@ -63,6 +70,7 @@
                             <!-- 本 タイトル -->
                             <td class="table-text">
                                 <div>{{ $book->item_name }}</div>
+                                <div> <img src="upload/{{$book->item_img}}" width="100"></div>
                             </td>
 
                             <!-- 本: 更新ボタン -->
@@ -87,6 +95,7 @@
                                     </button>
                                 </form>
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -94,8 +103,14 @@
         </div>
     </div>
 @endif
+    <!-- Book: 既に登録されてる本のリスト -->
+    
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+            {{ $books->links()}}
+            </div>
+        </div>
 
-  
 </div>
 
 @endsection
